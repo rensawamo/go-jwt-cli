@@ -28,7 +28,7 @@ func ContextGetToken(ctx context.Context) (*jwt.Token, error) {
 	if val == nil {
 		return nil, errors.New("no token found in context")
 	}
-
+	// valが*jwt.Token型の値であるかをテスト
 	t, ok := val.(*jwt.Token)
 	if !ok {
 		return nil, errors.New("unexpected token type in context")
@@ -37,7 +37,7 @@ func ContextGetToken(ctx context.Context) (*jwt.Token, error) {
 	return t, nil
 }
 
-func MustContextGetToken(ctx context.Context) *jwt.Token {
+func ShouldContextGetToken(ctx context.Context) *jwt.Token {
 	t, err := ContextGetToken(ctx)
 	if err != nil {
 		panic(err)

@@ -10,7 +10,7 @@ import (
 )
 
 // meta dataにトークンを設定して サーバに送る
-func (m *Middleware) UnaryClientInterceptor(ctx context.Context,  req, reply interface{},method string, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
+func (m *Middleware) UnaryClientInterceptor(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
 	// コンテキストから tokenを取得する
 	token, err := ContextGetToken(ctx)
 	if err != nil {
@@ -21,14 +21,13 @@ func (m *Middleware) UnaryClientInterceptor(ctx context.Context,  req, reply int
 	ctx = metadata.NewOutgoingContext(ctx,
 		metadata.New(
 			map[string]string{
-				"jwt": token.Raw,
+				"jwtTokens": token.Raw,
 			},
 		),
 	)
 
-	fmt.Println("* gRPC CLIENT set token")
+	fmt.Println("gRPC CLIENT set token")
 
 	// grpc実行
-
 	return invoker(ctx, method, req, reply, cc, opts...)
 }

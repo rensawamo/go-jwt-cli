@@ -45,7 +45,7 @@ func (m *Middleware) HandleHTTP(h http.Handler) http.HandlerFunc {
 		// 解析されたトークンで新しいコンテキストを取得する
 		ctx := ContextWithToken(r.Context(), token)
 
-		fmt.Println(" middleware validated and set set token")
+		fmt.Println("middleware validated and set set token")
 
 		// 更新されたコンテキストで次のハンドラを呼び出す
 		h.ServeHTTP(w, r.WithContext(ctx))

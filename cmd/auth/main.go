@@ -23,9 +23,9 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/login", auth.HandleLogin)
 
-	fmt.Println("Listening on :8080")
+	fmt.Println("Listening on :8081")
 
-	err = http.ListenAndServe(":8080", mux)
+	err = http.ListenAndServe(":8081", mux)
 	if err != nil {
 		panic(err)
 	}

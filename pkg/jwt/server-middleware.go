@@ -3,14 +3,16 @@ package jwt
 import (
 	"context"
 	"fmt"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
+
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 )
 
-func (m *Middleware) UnaryServerInterceptor(ctx context.Context,  info *grpc.UnaryServerInfo, req interface{},handler grpc.UnaryHandler) (resp interface{}, err error) {
-		// コンテキストのメタデータからトークンを取り出す
+// コンテキストのメタデータからトークンを取り出す
+func (m *Middleware) UnaryServerInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
+
 	headers, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
 		return nil, status.New(codes.Unauthenticated, "no  provided").Err()

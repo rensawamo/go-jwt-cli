@@ -3,9 +3,9 @@ package main
 import (
 	_ "embed"
 	"errors"
+	"fmt"
 	"jwt/pkg/jwt"
 	"net/http"
-	"fmt"
 	"os"
 )
 
@@ -31,12 +31,12 @@ func main() {
 	}
 }
 
-// AuthService は認証を処理し、トークンを発行する。
+// AuthService は認証を処理し、トークンを発行
 type AuthService struct {
 	issuer *jwt.Issuer
 }
 
-// NewAuthService は、指定された発行者を使用して新しいサービスを作成します。
+// NewAuthService は、指定された発行者を使用して新しいサービスを作成
 func NewAuthenticationService(issuer *jwt.Issuer) (*AuthService, error) {
 	if issuer == nil {
 		return nil, errors.New("required issue")
@@ -67,6 +67,5 @@ func (a *AuthService) HandleLogin(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("unable token:" + err.Error())) 
 		return
 	}
-	// shellのtokenへ
 	_, _ = w.Write([]byte(tokenString + "\n"))
 }

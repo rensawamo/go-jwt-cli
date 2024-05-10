@@ -6,18 +6,18 @@ import (
 	"strings"
 )
 
-// Middleware handles all jwt parsing and validation automatically when used
+// ミドルウェアは、jwtの解析と検証をすべて自動的に行う
 type Middleware struct {
-	// embed the validator to make token calls cleaner
+		// バリデータを埋め込んでトークン呼び出しをクリーンにする
 	Validator
 }
 
-// NewMiddleware creates a new middleware that validates using the
-// given public key file
+// NewMiddlewareは、指定された公開鍵ファイルを使用して検証を行う新しいミドルウェアを作成します。
+// 与えられた公開鍵ファイル
 func NewMiddleware(publicKeyPath string) (*Middleware, error) {
 	validator, err := NewValidator(publicKeyPath)
 	if err != nil {
-		return nil, fmt.Errorf("unable to create validator: %w", err)
+		return nil, fmt.Errorf("unable to  validator: %w", err)
 	}
 
 	return &Middleware{
@@ -30,7 +30,7 @@ func (m *Middleware) HandleHTTP(h http.Handler) http.HandlerFunc {
 		parts := strings.Split(r.Header.Get("Authorization"), " ")
 		if len(parts) < 2 || parts[0] != "Bearer" {
 			w.WriteHeader(http.StatusUnauthorized)
-			w.Write([]byte("missing or invalid authorization header")) //nolint
+			w.Write([]byte("missing or invalid authorization header"))
 			return
 		}
 		tokenString := parts[1]
@@ -38,16 +38,16 @@ func (m *Middleware) HandleHTTP(h http.Handler) http.HandlerFunc {
 		token, err := m.GetToken(tokenString)
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
-			w.Write([]byte("invalid token: " + err.Error())) //nolint
+			w.Write([]byte("invalid token: " + err.Error())) 
 			return
 		}
 
-		// Get a new context with the parsed token
+		// 解析されたトークンで新しいコンテキストを取得する
 		ctx := ContextWithToken(r.Context(), token)
 
-		fmt.Println("* HTTP SERVER middleware validated and set set token")
+		fmt.Println(" middleware validated and set set token")
 
-		// call the next handler with the updated context
+		// 更新されたコンテキストで次のハンドラを呼び出す
 		h.ServeHTTP(w, r.WithContext(ctx))
 	}
 }

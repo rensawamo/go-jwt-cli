@@ -48,3 +48,29 @@ $  token=$(curl admin:pass@localhost:8081/login); echo $token; curl -H "Authoriz
 $ curl -H "Authorization: Bearer $token" localhost:8082/hello; echo
 ```
 loginして tokenをうけとり midlewareにセットする。
+
+
+
+
+### backend 
+login後にトークンを獲得し、 headerの情報を取得して、grpc-localを実行
+tokenが 引数に含まれていない場合はエラーを返す
+
+```sh
+# serverのセットアップ
+$ go run ./cmd/backend  auth.ed.pub
+# grpcのサービス関数を実行
+$ token=$(curl admin:pass@localhost:8081/login); echo $token; go run cmd/grpc-local/main.go $token echo
+```
+
+
+
+
+
+
+```
+
+
+
+
+

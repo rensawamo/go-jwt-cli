@@ -12,7 +12,7 @@ type Middleware struct {
 	Validator
 }
 
-// NewMiddlewareは、指定された公開鍵ファイルを使用して検証を行う新しいミドルウェアを作成します。
+// NewMiddlewareは、指定された公開鍵ファイルを使用して検証を行う新しいミドルウェアを作成
 // 与えられた公開鍵ファイル
 func NewMiddleware(publicKeyPath string) (*Middleware, error) {
 	validator, err := NewValidator(publicKeyPath)

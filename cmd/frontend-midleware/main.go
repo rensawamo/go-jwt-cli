@@ -79,7 +79,7 @@ func (f *Frontend) ClaimsHandler(w http.ResponseWriter, r *http.Request) {
 func (f *Frontend) HelloHandler(w http.ResponseWriter, r *http.Request) {
 	preferredName := r.URL.Query().Get("preferredName")
 	if preferredName == "" {
-		preferredName = "my friend"
+		preferredName = "hello"
 	}
 
 	resp, err := f.backendClient.SayHello(r.Context(), &pb.HelloRequest{Name: preferredName})

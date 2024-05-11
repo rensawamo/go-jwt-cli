@@ -10,5 +10,5 @@
 *.out
 
 
-/auth.ed
-/auth.ed.pub
+auth.ed
+auth.ed.pub

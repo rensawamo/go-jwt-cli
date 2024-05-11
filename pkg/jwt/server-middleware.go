@@ -11,13 +11,15 @@ import (
 )
 
 // コンテキストのメタデータからトークンを取り出す
+// grpcのサービス関数の ctxのheaderにauthentizationを設定して毎回 読み込む
 func (m *Middleware) UnaryServerInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
 
+	
 	headers, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
 		return nil, status.New(codes.Unauthenticated, "no  provided").Err()
 	}
-	tokens := headers.Get("jwtTokens")
+	tokens := headers.Get("authorization")
 	if len(tokens) < 1 {
 		return nil, status.New(codes.Unauthenticated, "no rovided").Err()
 	}

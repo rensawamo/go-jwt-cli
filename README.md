@@ -65,10 +65,19 @@ $ token=$(curl admin:pass@localhost:8081/login); echo $token; go run cmd/grpc-lo
 
 
 
+### backend0-middleware
+ログイン後に、tokenを発行し、 tokenを認証するmiddlewareを仕込んだ UnaryServerIntersepterを作成して、middlewareで grpcのサービス関数のctxを検証する
 
+```sh
+# サーバの準備
+$  go run ./cmd/backend-middleware  auth.ed.pub
 
-
+#   grpcのサービス関数を実行
+$ token=$(curl admin:pass@localhost:8081/login); echo $token; go run cmd/grpc-local/main.go $token echo
 ```
+
+
+
 
 
 
